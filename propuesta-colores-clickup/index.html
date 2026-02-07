@@ -1,408 +1,392 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta: Optimización Standard BS - ClickUp</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --primary-accent: #7b68ee;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            
+            /* Colores Propuesta Nueva */
+            --color-draft: #7d7d7d;
+            --color-parking-new: #a352cc;
+            --color-todo-new: #ff7043;
+            --color-inprogress-new: #f5bc25;
+            --color-review-new: #2196f3;
+            --color-blocked: #e53935;
+            --color-done: #6bc290;
+            --color-closed: #43a047;
+
+            /* Colores Esquemas Actuales */
+            --old-todo: #4db3a2;
+            --old-inprogress: #7b68ee;
+            --old-warning: #f5bc25;
+            --current-blue: #2196f3;
+            --current-magenta: #d81b60;
+            --current-cyan: #00bcd4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 3px solid var(--primary-accent);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #636e72;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            border-left: 5px solid var(--primary-accent);
+            padding-left: 15px;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            margin: 2px;
+            white-space: nowrap;
+        }
+
+        /* Tabla de Fragmentación */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.8rem;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #edf2f7;
+        }
+
+        .comparison-table th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        /* Colores dinámicos para tags */
+        .bg-grey { background-color: #b2bec3; }
+        .bg-orange { background-color: #ff7043; }
+        .bg-yellow { background-color: #f5bc25; color: #000; }
+        .bg-purple { background-color: #7b68ee; }
+        .bg-magenta { background-color: #d81b60; }
+        .bg-red { background-color: #e53935; }
+        .bg-blue { background-color: #2196f3; }
+        .bg-cyan { background-color: #00bcd4; }
+        .bg-green { background-color: #6bc290; }
+        .bg-dark-green { background-color: #43a047; }
+        .bg-teal { background-color: #4db3a2; }
+        .bg-parking-new { background-color: #a352cc; }
+
+        .problem-box {
+            background-color: #fff5f5;
+            border-left: 5px solid #feb2b2;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-box {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .comparison-card {
+            flex: 1;
+            min-width: 300px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: #fcfcfc;
+        }
+
+        .comparison-card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .grid-item {
+            padding: 15px;
+            border: 1px dashed #cbd5e0;
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #a0aec0;
+            margin-top: 50px;
+            font-size: 0.8rem;
+        }
+
+        .benefit-title {
+            color: #2d3436;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .comparison-table { display: block; overflow-x: auto; }
+            .status-grid { grid-template-columns: 1fr; }
+            .comparison-box { flex-direction: column; }
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="es"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Propuesta: Optimización Standard BS - ClickUp&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--bg-color: #f8f9fa;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--text-color: #2d3436;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--primary-accent: #7b68ee;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--card-bg: #ffffff;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--border-radius: 8px;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>/* Colores Propuesta Nueva */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-draft: #7d7d7d;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-parking-new: #a352cc;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-todo-new: #ff7043;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-inprogress-new: #f5bc25;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-review-new: #2196f3;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-blocked: #e53935;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-done: #6bc290;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-closed: #43a047;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>/* Colores Esquemas Actuales */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--old-todo: #4db3a2;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--old-inprogress: #7b68ee;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--old-warning: #f5bc25;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--current-blue: #2196f3;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--current-magenta: #d81b60;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--current-cyan: #00bcd4;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--text-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--bg-color);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1200px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>header {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 50px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 3px solid var(--primary-accent);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>header h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 2.2rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #1a1a1a;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #636e72;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>section {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--card-bg);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: var(--border-radius);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 15px rgba(0,0,0,0.05);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>h2 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-left: 5px solid var(--primary-accent);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding-left: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1.5rem;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.status-tag {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 4px 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 4px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.7rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>white-space: nowrap;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Tabla de Fragmentación */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-table {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-collapse: collapse;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-table th, .comparison-table td {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: left;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #edf2f7;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-table th {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f7fafc;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #4a5568;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Colores dinámicos para tags */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-grey { background-color: #b2bec3; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-orange { background-color: #ff7043; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-yellow { background-color: #f5bc25; color: #000; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-purple { background-color: #7b68ee; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-magenta { background-color: #d81b60; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-red { background-color: #e53935; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-blue { background-color: #2196f3; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-cyan { background-color: #00bcd4; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-green { background-color: #6bc290; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-dark-green { background-color: #43a047; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-teal { background-color: #4db3a2; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.bg-parking-new { background-color: #a352cc; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.problem-box {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: #fff5f5;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-left: 5px solid #feb2b2;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-box {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 20px 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-wrap: wrap;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-card {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex: 1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>min-width: 300px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid #e2e8f0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: #fcfcfc;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.comparison-card h3 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 1rem;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-bottom: 1px solid #e2e8f0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding-bottom: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.status-grid {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: 1fr 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.grid-item {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px dashed #cbd5e0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.footer {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #a0aec0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 50px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.8rem;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.benefit-title {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: #2d3436;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 0.9rem;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 900px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.comparison-table { display: block; overflow-x: auto; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.status-grid { grid-template-columns: 1fr; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.comparison-box { flex-direction: column; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;header&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1&gt;Optimización de Estados ClickUp&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="subtitle"&gt;Estandarización basada en el uso real de los equipos BS&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECCIÓN 1: MAPA DE FRAGMENTACIÓN ACTUAL --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;1. Diagnóstico: Uso Actual de Estados por Espacio&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;El análisis de los espacios muestra que la mayoría de los equipos operativos ya han abandonado el &lt;strong&gt;Standard BS&lt;/strong&gt; original buscando colores más funcionales. &lt;strong&gt;DAD&lt;/strong&gt;, por ejemplo, utiliza la misma lógica que Paid Media y Creativity.&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;table class="comparison-table"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Categoría&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Standard BS (Actual)&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Paid Media, Inbound, MKTU, Creativity, HDC y DAD&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Soporte&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;SPM02&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Always ON&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Inicio&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-teal"&gt;To Do&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-orange"&gt;To Do&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-orange"&gt;To Do&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-red"&gt;Recepción&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-orange"&gt;To Do&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Pausa&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;Parking&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-grey"&gt;Stand By&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-red"&gt;Assigned&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-blue"&gt;Asignación&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-grey"&gt;Stand By&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Ejecución&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-purple"&gt;In Progress&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;In Progress&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;In Progress&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;En Producción&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;In Progress&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Revisión&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-yellow"&gt;Needs Review&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-blue"&gt;In Review&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-blue"&gt;In Review&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-orange"&gt;En Revisión&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-cyan"&gt;Always On&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Bloqueo&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-red"&gt;Blocked&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-magenta"&gt;Blocked / Rejected&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-magenta"&gt;Pending Info&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;-&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;-&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;strong&gt;Cierre&lt;/strong&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-green"&gt;Done&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-green"&gt;Accepted / Closed&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-dark-green"&gt;Closed&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-green"&gt;Facturada&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;&lt;span class="status-tag bg-dark-green"&gt;Complete&lt;/span&gt;&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/table&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="problem-box"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;strong&gt;Inconsistencia Crítica Detectada:&lt;/strong&gt; El &lt;strong&gt;Standard BS&lt;/strong&gt; actual utiliza Amarillo tanto para &lt;em&gt;Parking&lt;/em&gt; como para &lt;em&gt;Needs Review&lt;/em&gt;, mientras que el resto de la empresa ya utiliza el Naranja, Amarillo y Azul para diferenciar etapas.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECCIÓN 2: LIMITACIONES VISUALES --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;2. ¿Por qué el esquema actual falla?&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="status-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid-item"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;strong&gt;Poca Diferenciación:&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="status-tag bg-yellow"&gt;Parking&lt;/span&gt; vs &lt;span class="status-tag bg-yellow"&gt;Needs Review&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;&lt;small&gt;Al tener el mismo color, se requiere lectura obligatoria del texto. No hay reconocimiento visual inmediato de urgencia.&lt;/small&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid-item"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;strong&gt;Falta de Contraste:&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="status-tag bg-teal"&gt;To Do&lt;/span&gt; vs &lt;span class="status-tag bg-green"&gt;Done&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p&gt;&lt;small&gt;Tonos de verde/azul muy similares. Es difícil ver a golpe de vista cuánto trabajo falta por iniciar frente a lo terminado.&lt;/small&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECCIÓN 3: COMPARATIVA Y JUSTIFICACIÓN AMPLIADA --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2&gt;3. Propuesta de Evolución: Standard BS&lt;/h2&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="comparison-box"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Esquema Actual --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="comparison-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3&gt;Standard BS (Actual)&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-grey"&gt;Draft&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-yellow"&gt;Parking&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-teal"&gt;To Do&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-purple"&gt;In Progress&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-red"&gt;Blocked&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-yellow"&gt;Needs Review&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-green"&gt;Done&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-dark-green"&gt;Closed&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Esquema Propuesto --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="comparison-card" style="border-color: var(--primary-accent); background: #f5f3ff;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 style="color: var(--primary-accent);"&gt;Nueva Propuesta&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-grey"&gt;Draft&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-parking-new"&gt;Parking&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-orange"&gt;To Do&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-yellow"&gt;In Progress&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-red"&gt;Blocked&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-blue"&gt;Needs Review&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-green"&gt;Done&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;&lt;span class="status-tag bg-dark-green"&gt;Closed&lt;/span&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;&lt;strong&gt;Justificaciones detalladas de la recomendación:&lt;/strong&gt;&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;table class="comparison-table"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th style="width: 30%;"&gt;Argumento Técnico&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;th&gt;Impacto en la Operación&lt;/th&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/thead&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Alta Compatibilidad Legacy&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Se alinea directamente con el esquema ya adoptado por los equipos de &lt;strong&gt;Paid Media, Inbound, MKTU, Creativity, HDC y DAD&lt;/strong&gt;. Esto reduce la fricción al mover tareas entre espacios y facilita la inducción de nuevos integrantes.</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Psicología de Alta Atención&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Los colores &lt;strong&gt;Naranja (To Do)&lt;/strong&gt;, &lt;strong&gt;Púrpura (Parking)&lt;/strong&gt; y &lt;strong&gt;Rojo (Blocked)&lt;/strong&gt; son tonos de alta energía que "saltan" a la vista. Indican que el trabajo requiere acción inmediata o atención por estar fuera del flujo normal.</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Contraste Crítico para Gestión&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;strong&gt;Needs Review (Azul)&lt;/strong&gt; ofrece el contraste más alto frente al amarillo de "In Progress". Esto permite a los &lt;strong&gt;CS y PMs&lt;/strong&gt; identificar cuellos de botella de aprobación sin necesidad de filtrar la vista de lista.</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Degradado de Flujo (Temperatura)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Crea una lógica de "temperatura": el trabajo inicia en &lt;strong&gt;Naranja&lt;/strong&gt; (calor/inicio), se mantiene en &lt;strong&gt;Amarillo&lt;/strong&gt; (brillo/ejecución), pasa a &lt;strong&gt;Azul&lt;/strong&gt; (frío/validación) y termina en &lt;strong&gt;Verde&lt;/strong&gt; (estabilidad/éxito).</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Optimización de Dashboards&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Al unificar colores, los gráficos de pastel y barras en los Dashboards de ClickUp serán coherentes. Un gráfico con mucho azul siempre significará "pendiente de revisión" en cualquier espacio de la empresa.</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="benefit-title"&gt;Eliminación de Errores Humanos&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>Al separar cromáticamente &lt;strong&gt;Parking&lt;/strong&gt; de &lt;strong&gt;Needs Review&lt;/strong&gt;, se eliminan las entregas accidentales de tareas que en realidad estaban pausadas, y viceversa.</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/td&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/tr&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/tbody&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/table&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="footer"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p&gt;Documento Técnico de Operaciones BS - Propuesta de Estandarización ClickUp&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+    <div class="container">
+        <header>
+            <h1>Optimización de Estados ClickUp</h1>
+            <p class="subtitle">Estandarización basada en el uso real de los equipos BS</p>
+        </header>
+
+        <!-- SECCIÓN 1: MAPA DE FRAGMENTACIÓN ACTUAL -->
+        <section>
+            <h2>1. Diagnóstico: Uso Actual de Estados por Espacio</h2>
+            <p>El análisis de los espacios muestra que la mayoría de los equipos operativos ya han abandonado el <strong>Standard BS</strong> original buscando colores más funcionales. <strong>DAD</strong>, por ejemplo, utiliza la misma lógica que Paid Media y Creativity.</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Standard BS (Actual)</th>
+                        <th>Paid Media, Inbound, MKTU, Creativity, HDC y DAD</th>
+                        <th>Soporte</th>
+                        <th>SPM02</th>
+                        <th>Always ON</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Inicio</strong></td>
+                        <td><span class="status-tag bg-teal">To Do</span></td>
+                        <td><span class="status-tag bg-orange">To Do</span></td>
+                        <td><span class="status-tag bg-orange">To Do</span></td>
+                        <td><span class="status-tag bg-red">Recepción</span></td>
+                        <td><span class="status-tag bg-orange">To Do</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pausa</strong></td>
+                        <td><span class="status-tag bg-yellow">Parking</span></td>
+                        <td><span class="status-tag bg-grey">Stand By</span></td>
+                        <td><span class="status-tag bg-red">Assigned</span></td>
+                        <td><span class="status-tag bg-blue">Asignación</span></td>
+                        <td><span class="status-tag bg-grey">Stand By</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ejecución</strong></td>
+                        <td><span class="status-tag bg-purple">In Progress</span></td>
+                        <td><span class="status-tag bg-yellow">In Progress</span></td>
+                        <td><span class="status-tag bg-yellow">In Progress</span></td>
+                        <td><span class="status-tag bg-yellow">En Producción</span></td>
+                        <td><span class="status-tag bg-yellow">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Revisión</strong></td>
+                        <td><span class="status-tag bg-yellow">Needs Review</span></td>
+                        <td><span class="status-tag bg-blue">In Review</span></td>
+                        <td><span class="status-tag bg-blue">In Review</span></td>
+                        <td><span class="status-tag bg-orange">En Revisión</span></td>
+                        <td><span class="status-tag bg-cyan">Always On</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bloqueo</strong></td>
+                        <td><span class="status-tag bg-red">Blocked</span></td>
+                        <td><span class="status-tag bg-magenta">Blocked / Rejected</span></td>
+                        <td><span class="status-tag bg-magenta">Pending Info</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cierre</strong></td>
+                        <td><span class="status-tag bg-green">Done</span></td>
+                        <td><span class="status-tag bg-green">Accepted / Closed</span></td>
+                        <td><span class="status-tag bg-dark-green">Closed</span></td>
+                        <td><span class="status-tag bg-green">Facturada</span></td>
+                        <td><span class="status-tag bg-dark-green">Complete</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="problem-box">
+                <strong>Inconsistencia Crítica Detectada:</strong> El <strong>Standard BS</strong> actual utiliza Amarillo tanto para <em>Parking</em> como para <em>Needs Review</em>, mientras que el resto de la empresa ya utiliza el Naranja, Amarillo y Azul para diferenciar etapas.
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: LIMITACIONES VISUALES -->
+        <section>
+            <h2>2. ¿Por qué el esquema actual falla?</h2>
+            <div class="status-grid">
+                <div class="grid-item">
+                    <strong>Poca Diferenciación:</strong><br>
+                    <span class="status-tag bg-yellow">Parking</span> vs <span class="status-tag bg-yellow">Needs Review</span>
+                    <p><small>Al tener el mismo color, se requiere lectura obligatoria del texto. No hay reconocimiento visual inmediato de urgencia.</small></p>
+                </div>
+                <div class="grid-item">
+                    <strong>Falta de Contraste:</strong><br>
+                    <span class="status-tag bg-teal">To Do</span> vs <span class="status-tag bg-green">Done</span>
+                    <p><small>Tonos de verde/azul muy similares. Es difícil ver a golpe de vista cuánto trabajo falta por iniciar frente a lo terminado.</small></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: COMPARATIVA Y JUSTIFICACIÓN AMPLIADA -->
+        <section>
+            <h2>3. Propuesta de Evolución: Standard BS</h2>
+            
+            <div class="comparison-box">
+                <!-- Esquema Actual -->
+                <div class="comparison-card">
+                    <h3>Standard BS (Actual)</h3>
+                    <div><span class="status-tag bg-grey">Draft</span></div>
+                    <div><span class="status-tag bg-yellow">Parking</span></div>
+                    <div><span class="status-tag bg-teal">To Do</span></div>
+                    <div><span class="status-tag bg-purple">In Progress</span></div>
+                    <div><span class="status-tag bg-red">Blocked</span></div>
+                    <div><span class="status-tag bg-yellow">Needs Review</span></div>
+                    <div><span class="status-tag bg-green">Done</span></div>
+                    <div><span class="status-tag bg-dark-green">Closed</span></div>
+                </div>
+
+                <!-- Esquema Propuesto -->
+                <div class="comparison-card" style="border-color: var(--primary-accent); background: #f5f3ff;">
+                    <h3 style="color: var(--primary-accent);">Nueva Propuesta</h3>
+                    <div><span class="status-tag bg-grey">Draft</span></div>
+                    <div><span class="status-tag bg-parking-new">Parking</span></div>
+                    <div><span class="status-tag bg-orange">To Do</span></div>
+                    <div><span class="status-tag bg-yellow">In Progress</span></div>
+                    <div><span class="status-tag bg-red">Blocked</span></div>
+                    <div><span class="status-tag bg-blue">Needs Review</span></div>
+                    <div><span class="status-tag bg-green">Done</span></div>
+                    <div><span class="status-tag bg-dark-green">Closed</span></div>
+                </div>
+            </div>
+
+            <p><strong>Justificaciones detalladas de la recomendación:</strong></p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Argumento Técnico</th>
+                        <th>Impacto en la Operación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Alta Compatibilidad Legacy</span>
+                        </td>
+                        <td>
+                            Se alinea directamente con el esquema ya adoptado por los equipos de <strong>Paid Media, Inbound, MKTU, Creativity, HDC y DAD</strong>. Esto reduce la fricción al mover tareas entre espacios y facilita la inducción de nuevos integrantes.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Psicología de Alta Atención</span>
+                        </td>
+                        <td>
+                            Los colores <strong>Naranja (To Do)</strong>, <strong>Púrpura (Parking)</strong> y <strong>Rojo (Blocked)</strong> son tonos de alta energía que "saltan" a la vista. Indican que el trabajo requiere acción inmediata o atención por estar fuera del flujo normal.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Contraste Crítico para Gestión</span>
+                        </td>
+                        <td>
+                            <strong>Needs Review (Azul)</strong> ofrece el contraste más alto frente al amarillo de "In Progress". Esto permite a los <strong>CS y PMs</strong> identificar cuellos de botella de aprobación sin necesidad de filtrar la vista de lista.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Degradado de Flujo (Temperatura)</span>
+                        </td>
+                        <td>
+                            Crea una lógica de "temperatura": el trabajo inicia en <strong>Naranja</strong> (calor/inicio), se mantiene en <strong>Amarillo</strong> (brillo/ejecución), pasa a <strong>Azul</strong> (frío/validación) y termina en <strong>Verde</strong> (estabilidad/éxito).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Optimización de Dashboards</span>
+                        </td>
+                        <td>
+                            Al unificar colores, los gráficos de pastel y barras en los Dashboards de ClickUp serán coherentes. Un gráfico con mucho azul siempre significará "pendiente de revisión" en cualquier espacio de la empresa.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="benefit-title">Eliminación de Errores Humanos</span>
+                        </td>
+                        <td>
+                            Al separar cromáticamente <strong>Parking</strong> de <strong>Needs Review</strong>, se eliminan las entregas accidentales de tareas que en realidad estaban pausadas, y viceversa.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <div class="footer">
+            <p>Documento Técnico de Operaciones BS - Propuesta de Estandarización ClickUp</p>
+        </div>
+    </div>
+
 </body>
 </html>
