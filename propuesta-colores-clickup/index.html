@@ -79,6 +79,12 @@
             font-size: 1.5rem;
         }
 
+        h3 {
+            color: #4a5568;
+            font-size: 1.2rem;
+            margin-top: 25px;
+        }
+
         .status-tag {
             display: inline-block;
             padding: 4px 10px;
@@ -91,7 +97,7 @@
             white-space: nowrap;
         }
 
-        /* Tabla de Fragmentación */
+        /* Tablas */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -169,19 +175,41 @@
             border-radius: 8px;
         }
 
-        .footer {
-            text-align: center;
-            color: #a0aec0;
-            margin-top: 50px;
-            font-size: 0.8rem;
-        }
-
         .benefit-title {
             color: #2d3436;
             font-weight: bold;
             display: block;
             margin-bottom: 5px;
             font-size: 0.9rem;
+        }
+
+        .usability-badge {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.65rem;
+            margin-bottom: 5px;
+        }
+
+        .highlight-text {
+            color: #c53030;
+            font-weight: 600;
+        }
+
+        .logic-card {
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .footer {
+            text-align: center;
+            color: #a0aec0;
+            margin-top: 50px;
+            font-size: 0.8rem;
         }
 
         @media (max-width: 900px) {
@@ -199,7 +227,7 @@
             <p class="subtitle">Estandarización basada en el uso real de los equipos BS</p>
         </header>
 
-        <!-- SECCIÓN 1: MAPA DE FRAGMENTACIÓN ACTUAL -->
+        <!-- SECCIÓN 1: DIAGNÓSTICO -->
         <section>
             <h2>1. Diagnóstico: Uso Actual de Estados por Espacio</h2>
             <p>El análisis de los espacios muestra que la mayoría de los equipos operativos ya han abandonado el <strong>Standard BS</strong> original buscando colores más funcionales. <strong>DAD</strong>, por ejemplo, utiliza la misma lógica que Paid Media y Creativity.</p>
@@ -289,7 +317,7 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 3: COMPARATIVA Y JUSTIFICACIÓN AMPLIADA -->
+        <!-- SECCIÓN 3: COMPARATIVA DE EVOLUCIÓN -->
         <section>
             <h2>3. Propuesta de Evolución: Standard BS</h2>
             
@@ -320,64 +348,110 @@
                     <div><span class="status-tag bg-dark-green">Closed</span></div>
                 </div>
             </div>
+        </section>
 
-            <p><strong>Justificaciones detalladas de la recomendación:</strong></p>
+        <!-- SECCIÓN 4: FUNDAMENTOS DE USABILIDAD -->
+        <section>
+            <h2>4. Fundamentos de Usabilidad y Psicología de Gestión</h2>
+            <p>El cambio de colores propuesto optimiza la carga cognitiva del equipo mediante principios de diseño de interfaces:</p>
+
+            <div class="status-grid">
+                <div class="grid-item">
+                    <span class="usability-badge">GESTALT</span>
+                    <span class="benefit-title">Principio de Finalización</span>
+                    <p><small>El <strong>Verde</strong> debe reservarse exclusivamente para el éxito. Si el <em>To Do</em> es verde, el tablero "parece" terminado incluso cuando está lleno de tareas nuevas, reduciendo el impulso de avance.</small></p>
+                </div>
+                <div class="grid-item">
+                    <span class="usability-badge">UX</span>
+                    <span class="benefit-title">Carga Cognitiva</span>
+                    <p><small>El <strong>Amarillo (In Progress)</strong> actúa como un recordatorio constante de "energía en uso". Al ser un color vibrante, impide que la tarea sea ignorada en el fondo del tablero.</small></p>
+                </div>
+                <div class="grid-item">
+                    <span class="usability-badge">WCAG 2.1</span>
+                    <span class="benefit-title">Accesibilidad de Contraste</span>
+                    <p><small>Eliminamos el texto blanco sobre amarillo. La nueva propuesta asegura legibilidad clara para todos los usuarios, incluyendo aquellos con sensibilidad visual.</small></p>
+                </div>
+                <div class="grid-item">
+                    <span class="usability-badge">GESTALT</span>
+                    <span class="benefit-title">Principio de Similitud</span>
+                    <p><small>Agrupar estados finales en la familia de los <strong>Verdes</strong> permite al cerebro ignorar visualmente lo completado para enfocarse en lo pendiente.</small></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 5: LÓGICA DE FLUJO VS. LÓGICA DE TRÁFICO -->
+        <section>
+            <h2>5. Lógica de Flujo vs. Lógica de Tráfico</h2>
+            <p>Es común pensar en el <strong>Verde como "Go"</strong> (lógica de semáforo), pero en la gestión de activos digitales la semántica cambia para evitar errores operativos:</p>
+            
+            <div class="status-grid">
+                <div class="logic-card">
+                    <span class="benefit-title">¿Por qué NO Verde en TO DO?</span>
+                    <p><small>En ClickUp, el verde es la <strong>recompensa dopamínica</strong> del usuario. Si marcamos el inicio con verde, el cerebro pierde el incentivo visual de "llegar a la meta". Además, un Dashboard con 100 tareas en <em>To Do</em> se vería todo verde, dando una <span class="highlight-text">falsa sensación de seguridad</span> al liderazgo, cuando en realidad el trabajo ni siquiera ha empezado.</small></p>
+                </div>
+                <div class="logic-card">
+                    <span class="benefit-title">¿Por qué Amarillo en IN PROGRESS?</span>
+                    <p><small>El amarillo no es solo una alerta de peligro; es el color de la <strong>energía activa y el sol</strong>. En metodologías Agile, indica "Trabajo en Movimiento". Al ser una "alerta", obliga al operativo a no dejar la tarea ahí estancada: el color recuerda que <strong>el reloj está corriendo</strong> y debe avanzar hacia la validación.</small></p>
+                </div>
+            </div>
 
             <table class="comparison-table">
                 <thead>
                     <tr>
-                        <th style="width: 30%;">Argumento Técnico</th>
-                        <th>Impacto en la Operación</th>
+                        <th>Estado</th>
+                        <th>Color</th>
+                        <th>Concepto en Gestión BS</th>
+                        <th>Efecto Psicológico</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Alta Compatibilidad Legacy</span>
-                        </td>
-                        <td>
-                            Se alinea directamente con el esquema ya adoptado por los equipos de <strong>Paid Media, Inbound, MKTU, Creativity, HDC y DAD</strong>. Esto reduce la fricción al mover tareas entre espacios y facilita la inducción de nuevos integrantes.
-                        </td>
+                        <td><span class="status-tag bg-grey">Draft</span></td>
+                        <td>Gris</td>
+                        <td><strong>Boceto / Ideación</strong></td>
+                        <td>"En espera de definición". Estado pasivo inicial.</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Psicología de Alta Atención</span>
-                        </td>
-                        <td>
-                            Los colores <strong>Naranja (To Do)</strong>, <strong>Púrpura (Parking)</strong> y <strong>Rojo (Blocked)</strong> son tonos de alta energía que "saltan" a la vista. Indican que el trabajo requiere acción inmediata o atención por estar fuera del flujo normal.
-                        </td>
+                        <td><span class="status-tag bg-parking-new">Parking</span></td>
+                        <td>Púrpura</td>
+                        <td><strong>Pausa Estratégica</strong></td>
+                        <td>"Latencia". No distrae del flujo activo de trabajo.</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Contraste Crítico para Gestión</span>
-                        </td>
-                        <td>
-                            <strong>Needs Review (Azul)</strong> ofrece el contraste más alto frente al amarillo de "In Progress". Esto permite a los <strong>CS y PMs</strong> identificar cuellos de botella de aprobación sin necesidad de filtrar la vista de lista.
-                        </td>
+                        <td><span class="status-tag bg-orange">To Do</span></td>
+                        <td>Naranja</td>
+                        <td><strong>Encendido / Ignición</strong></td>
+                        <td>"Prepárate para arrancar". Alta visibilidad sin ser "éxito".</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Degradado de Flujo (Temperatura)</span>
-                        </td>
-                        <td>
-                            Crea una lógica de "temperatura": el trabajo inicia en <strong>Naranja</strong> (calor/inicio), se mantiene en <strong>Amarillo</strong> (brillo/ejecución), pasa a <strong>Azul</strong> (frío/validación) y termina en <strong>Verde</strong> (estabilidad/éxito).
-                        </td>
+                        <td><span class="status-tag bg-yellow">In Progress</span></td>
+                        <td>Amarillo</td>
+                        <td><strong>Energía / Foco Activo</strong></td>
+                        <td>"Atención: Hay esfuerzo invirtiéndose aquí". Evita el estancamiento.</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Optimización de Dashboards</span>
-                        </td>
-                        <td>
-                            Al unificar colores, los gráficos de pastel y barras en los Dashboards de ClickUp serán coherentes. Un gráfico con mucho azul siempre significará "pendiente de revisión" en cualquier espacio de la empresa.
-                        </td>
+                        <td><span class="status-tag bg-red">Blocked</span></td>
+                        <td>Rojo</td>
+                        <td><strong>Emergencia / Paro</strong></td>
+                        <td>"Intervención inmediata requerida". Máxima alerta visual.</td>
                     </tr>
                     <tr>
-                        <td>
-                            <span class="benefit-title">Eliminación de Errores Humanos</span>
-                        </td>
-                        <td>
-                            Al separar cromáticamente <strong>Parking</strong> de <strong>Needs Review</strong>, se eliminan las entregas accidentales de tareas que en realidad estaban pausadas, y viceversa.
-                        </td>
+                        <td><span class="status-tag bg-blue">Needs Review</span></td>
+                        <td>Azul</td>
+                        <td><strong>Enfriamiento / Verificación</strong></td>
+                        <td>"Calma: El trabajo técnico terminó, ahora validamos".</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status-tag bg-green">Done</span></td>
+                        <td>Verde</td>
+                        <td><strong>Meta / Seguridad</strong></td>
+                        <td>"Misión cumplida". Solo aquí el usuario siente el descanso visual.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status-tag bg-dark-green">Closed</span></td>
+                        <td>Verde Bosque</td>
+                        <td><strong>Archivo / Finalización</strong></td>
+                        <td>Confirmación de cierre de ciclo y liberación de carga.</td>
                     </tr>
                 </tbody>
             </table>
